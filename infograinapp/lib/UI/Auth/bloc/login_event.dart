@@ -16,11 +16,11 @@ class OnSubmitEvent extends LoginEvent {
   List<Object> get props => [id, pass];
 }
 
-class VerifyOtp extends LoginEvent {
+class VerifyOtpEvent extends LoginEvent {
   final email;
   final otp;
 
-  const VerifyOtp({this.email, this.otp});
+  const VerifyOtpEvent({this.email, this.otp});
 
   @override
   List<Object> get props => [otp];

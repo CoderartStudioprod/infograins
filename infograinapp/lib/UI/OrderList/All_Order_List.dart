@@ -48,6 +48,7 @@ class _AllorderListState extends State<AllorderList> {
             GestureDetector(
               onTap: () async {
                 await SharedPref.clearSharedPreference(context);
+
                 Navigator.pushNamedAndRemoveUntil(
                     context, "/login_page", (route) => false);
               },

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:infograinapp/UI/Auth/bloc/login_bloc.dart';
@@ -19,7 +21,7 @@ class VerifyOTPSCREEN extends StatefulWidget {
 // SharedPref.setBooleanPreference(SharedPref.LOGIN, true);
 class _VerifyOTPSCREENState extends State<VerifyOTPSCREEN> {
   LoginBloc loginBloc = LoginBloc();
-  TextEditingController _otpController = TextEditingController();
+  final TextEditingController _otpController = TextEditingController();
   bool passwordVisible = false;
   @override
   Widget build(BuildContext context) {
@@ -39,8 +41,9 @@ class _VerifyOTPSCREENState extends State<VerifyOTPSCREEN> {
       body: BlocProvider<LoginBloc>(
         create: (context) => loginBloc,
         child: BlocListener<LoginBloc, LoginState>(
-          listener: (context, state) async {
+          listener: (context, state) {
             if (state is VerificationFailureState) {
+              log("state");
               Utility.showToast(msg: state.msg);
             }
             if (state is LoginVerifiedState) {
@@ -64,7 +67,7 @@ class _VerifyOTPSCREENState extends State<VerifyOTPSCREEN> {
 
                     textwidget("Enter the OTP Sent to Your Email", 14,
                         BTNPrimaryColor, FontWeight.normal),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     TextFormField(
@@ -136,7 +139,7 @@ class _VerifyOTPSCREENState extends State<VerifyOTPSCREEN> {
                       child: MaterialButton(
                         onPressed: () async {
                           if (_otpController.text.isNotEmpty) {
-                            loginBloc.add(VerifyOtp(
+                            loginBloc.add(VerifyOtpEvent(
                                 otp: _otpController.text, email: widget.email));
                           }
                           // if (_formKey.currentState!.validate()) {

@@ -8,6 +8,7 @@ import 'package:infograinapp/model/SigupResponse.dart';
 import 'package:infograinapp/utility/Initilizier.dart';
 
 import '../../../model/LoginResponse.dart';
+import '../../../model/VerifyOTPRes.dart';
 import '../../../utility/GetDeviceInfo.dart';
 import '../../../utility/network.dart';
 import '../../../utility/utility.dart';
@@ -26,7 +27,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     if (event is OnSubmitSignUPEvent) {
       yield* signUP(event);
     }
-    if (event is VerifyOtp) {
+    if (event is VerifyOtpEvent) {
       yield* virifyUser(event);
     }
   }
@@ -95,31 +96,30 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   }
 
   Stream<LoginState> virifyUser(event) async* {
+    log("khhkhk khk");
+    VerifyOtPres? response;
     if (await Network.isConnected()) {
-      yield LoginInitial();
-      // yield LoadingState(message: "");
-      Map input;
-      input = await getDeviceInfo.getDeviceInfo(event.email, event.otp);
-      log("verification Data: $input");
-      // debugPrint(input.toString());
+      log("Connected");
       EasyLoading.show(status: "Loading...");
-      SignUpresponse response = await apiProvider.verifyLoginUp(input);
+      Map input = await getDeviceInfo.getDeviceInfo(event.email, event.otp);
+      yield LoginInitial();
+      log("enter khk");
+      response = await apiProvider.verifyLoginUp(input);
       EasyLoading.dismiss();
       if (response.success) {
         Utility.showToast(
-          msg: "Please verify OTP",
+          msg: response.message!,
         );
         yield LoginVerifiedState();
       } else {
+        log("error" + response.message!);
+        Utility.showToast(msg: "442 stuts error");
         yield VerificationFailureState(msg: response.message!);
       }
     } else {
       EasyLoading.dismiss();
       yield VerificationFailureState(
           msg: "Please Check Your Internet Connection");
-      // Utility.showToast(
-      //   msg: "Please Check Your Internet Connection",
-      // );
     }
   }
 }

@@ -1,6 +1,7 @@
 // ignore_for_file: deprecated_member_use
 
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:infograinapp/Api/Endpoint.dart';
 import 'package:infograinapp/Api/server_error.dart';
 import 'package:infograinapp/model/SigupResponse.dart';
+import 'package:infograinapp/model/VerifyOTPRes.dart';
 import 'package:infograinapp/utility/dcryptfun.dart';
 import '../model/AllProductList.dart';
 import '../model/LoginResponse.dart';
@@ -48,15 +50,15 @@ class ApiProvider {
     }
   }
 
-  Future<SignUpresponse> verifyLoginUp(input) async {
+  Future<VerifyOtPres> verifyLoginUp(input) async {
     try {
       Response res = await dio.post(
         "https://bharattoken.org/sliceLedger/admin/api/auth/verifyOtp",
         data: input,
       );
 
-      SignUpresponse response =
-          SignUpresponse.fromJson(decryptResponse(res.toString()));
+      VerifyOtPres response =
+          VerifyOtPres.fromJson(decryptResponse(res.toString()));
       return response;
     } catch (error) {
       EasyLoading.dismiss();
@@ -70,7 +72,8 @@ class ApiProvider {
         debugPrint(message.toString());
       }
       EasyLoading.dismiss();
-      return SignUpresponse(success: false);
+      log("jkkkk");
+      return VerifyOtPres(success: false, message: message);
     }
   }
 
