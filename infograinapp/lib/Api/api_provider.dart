@@ -11,6 +11,7 @@ import 'package:infograinapp/Api/server_error.dart';
 import 'package:infograinapp/model/SigupResponse.dart';
 import 'package:infograinapp/model/VerifyOTPRes.dart';
 import 'package:infograinapp/utility/dcryptfun.dart';
+import 'package:infograinapp/utility/sharedpref.dart';
 import '../model/AllProductList.dart';
 import '../model/LoginResponse.dart';
 import '../utility/Initilizier.dart';
@@ -105,11 +106,38 @@ class ApiProvider {
 
   Future<List<Listofpriduct>> getOrderList() async {
     try {
-      Response res = await dio.get(
-        EndPoints.ALL_ORDER,
-      );
+      String accessToken = await SharedPref.getStringPreference("token");
+      Response res = await dio.get(EndPoints.ALL_ORDER,
+          options: Options(headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "Authorization": "Bearer $accessToken"
+          }));
       // List<Listofpriduct> response = json.decode(res.toString());
       List<dynamic> data = json.decode(decryptResponse(res.toString()));
+      debugPrint("jahid==>" + data.toString());
+      return data.cast<Listofpriduct>();
+
+      // return response;Listofpriduct
+    } catch (error) {
+      debugPrint("jahid==>" + error.toString());
+      if (error is DioError) {
+      } else {}
+      return [];
+    }
+  }
+
+  Future<dynamic> logoutusers() async {
+    try {
+      String accessToken = await SharedPref.getStringPreference("token");
+      Response res = await dio.get(EndPoints.LOGOUT,
+          options: Options(headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "Authorization": "Bearer $accessToken"
+          }));
+      // List<Listofpriduct> response = json.decode(res.toString());
+      var data = json.decode(decryptResponse(res.toString()));
       debugPrint("jahid==>" + data.toString());
       return data.cast<Listofpriduct>();
 

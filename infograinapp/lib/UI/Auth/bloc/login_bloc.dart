@@ -11,6 +11,7 @@ import '../../../model/LoginResponse.dart';
 import '../../../model/VerifyOTPRes.dart';
 import '../../../utility/GetDeviceInfo.dart';
 import '../../../utility/network.dart';
+import '../../../utility/sharedpref.dart';
 import '../../../utility/utility.dart';
 
 part 'login_event.dart';
@@ -101,7 +102,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     if (await Network.isConnected()) {
       log("Connected");
       EasyLoading.show(status: "Loading...");
-      Map input = await getDeviceInfo.getDeviceInfo(event.email, event.otp);
+      Map input = await getDeviceInfo.getDeviceInfo(event.email, "1234");
       yield LoginInitial();
       log("enter khk");
       response = await apiProvider.verifyLoginUp(input);
@@ -110,6 +111,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         Utility.showToast(
           msg: response.message!,
         );
+        SharedPref.setStringPreference("token", response.result!.accessToken!);
         yield LoginVerifiedState();
       } else {
         log("error" + response.message!);

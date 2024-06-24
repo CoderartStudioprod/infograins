@@ -8,3 +8,5 @@ abstract class AllorderEvent extends Equatable {
 }
 
 class GetInitialAllOrderListEvent extends AllorderEvent {}
+
+class LogoutEvent extends AllorderEvent {}

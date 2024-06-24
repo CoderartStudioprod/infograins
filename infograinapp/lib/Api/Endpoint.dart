@@ -8,5 +8,5 @@ class EndPoints {
   // Get all product
   static const ALL_ORDER = "auth/userOrder";
   // detail product
-  static const DETAIL_PRODUCT = "products/getById/";
+  static const LOGOUT = "auth/logout";
 }

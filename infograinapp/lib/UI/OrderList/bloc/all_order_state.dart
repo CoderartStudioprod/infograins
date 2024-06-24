@@ -14,6 +14,8 @@ class GetAllorder extends AllOrderState {
   GetAllorder({this.list});
 }
 
-class AllProductsLoadingState extends AllOrderState {}
+class LogoutState extends AllOrderState {}
+
+class AllOrdersLoadingState extends AllOrderState {}
 
 class AllProductsFailureState extends AllOrderState {}

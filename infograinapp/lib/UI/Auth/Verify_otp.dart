@@ -48,7 +48,9 @@ class _VerifyOTPSCREENState extends State<VerifyOTPSCREEN> {
             }
             if (state is LoginVerifiedState) {
               SharedPref.setBooleanPreference(SharedPref.LOGIN, true);
-              Navigator.pushReplacementNamed(context, "/All_Order_list");
+
+              Navigator.pushNamedAndRemoveUntil(
+                  context, "/All_Order_list", ModalRoute.withName('/'));
             }
           },
           child: Container(
