@@ -19,7 +19,7 @@ there is seperate implementation of logic and ui
   - `Api/`: Contains repository classes that abstract the data layer.
   - `services/`: Contains network services and API integration.
   - `widgets/`: Contains utility Widgets and functions.
-  
+
 ### Key Components
 
 - **BLoC**: Manages the state of the application and handles business logic.
@@ -41,6 +41,16 @@ here the reposes:
 [log] {"status":401,"message":"Unauthenticated","results":{}}
 
 # I am not adding notification code becozz i don't have any account for create firebase console.
+### here some screenshots
 
-that all from my side 
-thank you
+![Alt text](infograinapp/flutter_01.png)
+![Alt text](infograinapp/flutter_02.png)
+![Alt text](infograinapp/flutter_03.png)
+![Alt text](infograinapp/flutter_04.png)
+![Alt text](infograinapp/flutter_05.png)
+![Alt text](infograinapp/flutter_06.png)
+![Alt text](infograinapp/flutter_07.png)
+
+
+### that all from my side 
+##### thank you
